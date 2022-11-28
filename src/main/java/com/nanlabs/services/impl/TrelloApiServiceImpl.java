@@ -140,13 +140,16 @@ public class TrelloApiServiceImpl implements TrelloApiService {
             else if(cardRequestDTO.getType().equals("task")){
                 if(cardRequestDTO.getTitle() == null || cardRequestDTO.getTitle().isEmpty()
                         || cardRequestDTO.getCategory() == null || cardRequestDTO.getCategory().isEmpty()){
-                    throw new BusinessException(40,VALIDATION, "Field description is required in body", HttpCode.BAD_REQUEST);
+                    throw new BusinessException(40,VALIDATION, "Fields category and title are required in body", HttpCode.BAD_REQUEST);
                 }else{
                     //category validation
-                    if(!labelsMap.containsKey(cardRequestDTO.getCategory()))
-                        throw new BusinessException(50,VALIDATION,
-                                "Category invalid. Only this list is available: ["+String.join(", ",labelsMap.keySet())+"]" ,
+                    if(!labelsMap.containsKey(cardRequestDTO.getCategory())) {
+                        HashMap<String, String> m = (HashMap<String, String>) labelsMap.clone();
+                        m.remove("Bug");
+                        throw new BusinessException(50, VALIDATION,
+                                "Category invalid. Only this list is available: [" + String.join(", ", m.keySet()) + "]",
                                 HttpCode.BAD_REQUEST);
+                    }
                 }
             }else{
                 throw new BusinessException(1000,VALIDATION, "Type task invalid", HttpCode.BAD_REQUEST);
