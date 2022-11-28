@@ -1,13 +1,12 @@
 package com.nanlabs.configurations;
 
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yml")
 @ConfigurationProperties(prefix = "trello")
 public class TrelloConfigurations {
     @Value("${trello.secret}")
@@ -18,17 +17,17 @@ public class TrelloConfigurations {
     private String token;
     @Value("${trello.board}")
     private String board;
-    @Value("${trello.board.label.bug}")
-    private String bugLabel;
     @Value("${trello.list.todo}")
     private String todoList;
     @Value("${trello.list.tasks}")
     private String tasksList;
-    @Value("${trello.board.label.maintenance}")
+    @Value("${trello.labels.bug}")
+    private String bugLabel;
+    @Value("${trello.labels.maintenance}")
     private String maintenanceLabel;
-    @Value("${trello.board.label.research}")
+    @Value("${trello.labels.research}")
     private String researchLabel;
-    @Value("${trello.board.label.test}")
+    @Value("${trello.labels.test}")
     private String testLabel;
 
 

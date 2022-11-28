@@ -120,26 +120,31 @@ public class TrelloApiServiceImpl implements TrelloApiService {
 
     public void cardEvaluator(CardRequestDTO cardRequestDTO) throws BusinessException {
         if(!Objects.isNull(cardRequestDTO)) {
+            if(cardRequestDTO.getType() ==null){
+                throw new BusinessException(1,VALIDATION, "Type is required", HttpCode.BAD_REQUEST);
+            }
             //issue validation
             if(cardRequestDTO.getType().equals("issue")){
-                if(cardRequestDTO.getTitle().isEmpty() || cardRequestDTO.getDescription().isEmpty()){
+                if(cardRequestDTO.getTitle() ==null|| cardRequestDTO.getTitle().trim().isEmpty()
+                        || cardRequestDTO.getTitle() ==null || cardRequestDTO.getDescription().trim().isEmpty()){
                     throw new BusinessException(20,VALIDATION, "Fields title and description are required in body", HttpCode.BAD_REQUEST);
                 }
             }
             //bug validation
             else if(cardRequestDTO.getType().equals("bug")){
-                if(cardRequestDTO.getDescription().isEmpty()){
-                    throw new BusinessException(20,VALIDATION, "Field description is required in body", HttpCode.BAD_REQUEST);
+                if(cardRequestDTO.getDescription() == null || cardRequestDTO.getDescription().isEmpty()){
+                    throw new BusinessException(30,VALIDATION, "Field description is required in body", HttpCode.BAD_REQUEST);
                 }
             }
             //task validation
             else if(cardRequestDTO.getType().equals("task")){
-                if(cardRequestDTO.getTitle().isEmpty() || cardRequestDTO.getCategory().isEmpty()){
-                    throw new BusinessException(20,VALIDATION, "Field description is required in body", HttpCode.BAD_REQUEST);
+                if(cardRequestDTO.getTitle() == null || cardRequestDTO.getTitle().isEmpty()
+                        || cardRequestDTO.getCategory() == null || cardRequestDTO.getCategory().isEmpty()){
+                    throw new BusinessException(40,VALIDATION, "Field description is required in body", HttpCode.BAD_REQUEST);
                 }else{
                     //category validation
                     if(!labelsMap.containsKey(cardRequestDTO.getCategory()))
-                        throw new BusinessException(20,VALIDATION,
+                        throw new BusinessException(50,VALIDATION,
                                 "Category invalid. Only this list is available: ["+String.join(", ",labelsMap.keySet())+"]" ,
                                 HttpCode.BAD_REQUEST);
                 }

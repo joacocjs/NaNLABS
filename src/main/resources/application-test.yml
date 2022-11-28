@@ -1,0 +1,24 @@
+#application settings
+server:
+  port: 3000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+#trello settings
+trello:
+  appkey: 23423kjhblkjh
+  secret: 234k2jn34lkj2n3
+  #Lo ideal seria negociar un token con oauth y pasarlo por authorization header. No lo aplicaremos para este caso
+  #token sin expiracion
+  token: 234kjn23ñ4jnñn
+  board: dfg09d79f8g
+  labels:
+    bug: 23kjhkjh
+    maintenance: sd9f877s9
+    research: 3k45jh34jh
+    test: gh87g98hn79
+  list:
+    todo: khj2b34lkj2h3
+    tasks: df7b6df78
